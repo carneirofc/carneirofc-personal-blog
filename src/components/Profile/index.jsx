@@ -1,5 +1,6 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
+import Avatar from "../Avatar";
 
 const Profile = () => {
   const {
@@ -27,6 +28,7 @@ const Profile = () => {
         {description}
       </p>
       <p>
+        <Avatar />
         <h2>{author}</h2>
         <h3>{profession}</h3>
         {aboutAuthor}
