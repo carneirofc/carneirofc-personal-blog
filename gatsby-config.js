@@ -7,6 +7,7 @@ module.exports = {
     profession: `Engenheiro de Controle e Automação & Desenvolvedor de Software`,
   },
   plugins: [
+    `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
