@@ -23,16 +23,16 @@ const Profile = () => {
 
   return (
     <div>
-      <p>
+      <div>
         <h1>{title}</h1>
         {description}
-      </p>
-      <p>
+      </div>
+      <div>
         <Avatar />
-        <h2>{author}</h2>
-        <h3>{profession}</h3>
+        <h5>{author}</h5>
+        <h4>{profession}</h4>
         {aboutAuthor}
-      </p>
+      </div>
     </div>
   );
 };

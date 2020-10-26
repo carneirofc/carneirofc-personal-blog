@@ -25,14 +25,12 @@ const LayoutMain = styled.main`
 const Layout = ({ children }) => {
   return (
     <>
-      <aside>
-        <Profile />
-      </aside>
-      <main>{children}</main>
-      <footer style={{ marginTop: `2rem` }}>
-        © {new Date().getFullYear()}, Built with {` `}
-        <a href="https://www.gatsbyjs.com">Gatsby</a>
-      </footer>
+      <LayoutWrapper>
+        <aside>
+          <Profile />
+        </aside>
+        <LayoutMain>{children}</LayoutMain>
+      </LayoutWrapper>
     </>
   );
 };

@@ -2,7 +2,7 @@
 import React from "react";
 import { PageProps, Link, graphql } from "gatsby";
 
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 import SEO from "../components/seo";
 
 type DataProps = {
@@ -31,15 +31,11 @@ const UsingTypescript: React.FC<PageProps<DataProps>> = ({ data, path }) => (
       file.
     </p>
     <p>
-      You're currently on the page "{path}" which was built on{" "}
-      {data.site.buildTime}.
+      You're currently on the page "{path}" which was built on {data.site.buildTime}.
     </p>
     <p>
       To learn more, head over to our
-      <a href="https://www.gatsbyjs.com/docs/typescript/">
-        documentation about TypeScript
-      </a>
-      .
+      <a href="https://www.gatsbyjs.com/docs/typescript/">documentation about TypeScript</a>.
     </p>
     <Link to="/">Go back to the homepage</Link>
   </Layout>
