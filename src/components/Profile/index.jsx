@@ -1,6 +1,7 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import Avatar from "../Avatar";
+/* import "typeface-jetbrains-mono"; */
 
 const Profile = () => {
   const {

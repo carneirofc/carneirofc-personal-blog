@@ -8,7 +8,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-
+import GlobalStyles from "../../styles/global";
 import Profile from "../Profile";
 
 const LayoutWrapper = styled.section`
@@ -16,7 +16,6 @@ const LayoutWrapper = styled.section`
 `;
 
 const LayoutMain = styled.main`
-  background: #a5c6e6;
   min-height: 100vh;
   padding: 0 3.75rem 0 20rem;
   width: 100%;
@@ -26,6 +25,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <LayoutWrapper>
+        <GlobalStyles />
         <aside>
           <Profile />
         </aside>
