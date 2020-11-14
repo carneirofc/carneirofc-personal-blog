@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  gatsby:
+    image: node:14.15.0-buster
+    network_mode: host
+    working_dir: /myBlog
+    command: sleep infinity
+    volumes:
+      - '.:/myBlog'
