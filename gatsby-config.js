@@ -2,9 +2,9 @@ module.exports = {
   siteMetadata: {
     title: `My Personal Blog`,
     description: `Javascript, Python, C, Modern C++, Linux administration, Docker and some other things...`,
-    author: `@carneirofc`,
+    author: `Claudio Carneiro`,
     aboutAuthor: `Apaixonado por tecnologia e desenvolvimento`,
-    profession: `Engenheiro de Controle e Automação & Desenvolvedor de Software`,
+    profession: `Engenheiro de Controle e Automação`,
   },
   plugins: [
     `gatsby-plugin-styled-components`,
