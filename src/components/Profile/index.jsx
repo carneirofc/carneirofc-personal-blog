@@ -1,12 +1,14 @@
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import Avatar from "../Avatar";
+import * as S from "./styled";
+
 /* import "typeface-jetbrains-mono"; */
 
 const Profile = () => {
   const {
     site: {
-      siteMetadata: { title, description, author, aboutAuthor, profession },
+      siteMetadata: { description, author, profession },
     },
   } = useStaticQuery(graphql`
     query GetMetadata {
@@ -23,18 +25,14 @@ const Profile = () => {
   `);
 
   return (
-    <div>
-      <div>
-        <h1>{title}</h1>
-        {description}
-      </div>
-      <div>
+    <S.ProfileWrapper>
+      <S.ProfileLink>
         <Avatar />
-        <h5>{author}</h5>
-        <h4>{profession}</h4>
-        {aboutAuthor}
-      </div>
-    </div>
+        <S.ProfileAuthor>{author}</S.ProfileAuthor>
+        <S.ProfileProfession>{profession}</S.ProfileProfession>
+      </S.ProfileLink>
+      <S.ProfileDescription>{description}</S.ProfileDescription>
+    </S.ProfileWrapper>
   );
 };
 export default Profile;
