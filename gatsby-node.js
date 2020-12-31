@@ -4,9 +4,13 @@
  * See: https://www.gatsbyjs.com/docs/node-apis/
  */
 
-// You can delete this file if you're not using it
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const path = require(`path`);
+
+// Templates
+const blogPostTemplate = path.resolve("src/templates/blog-post.jsx");
+const indexTemplate = path.resolve("./src/templates/blog-list.jsx");
+
 
 // Add slug field on each post
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -20,41 +24,63 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
-  const blogPostTemplate = path.resolve("src/templates/blog-post.jsx");
-  // Query for markdown nodes to use in creating pages.
-  // You can query for whatever data you want to create pages for e.g.
-  // products, portfolio items, landing pages, etc.
-  // Variables can be added as the second function parameter
-  return graphql(
-    `
-      query loadPagesQuery($limit: Int!) {
-        allMarkdownRemark(limit: $limit) {
-          edges {
-            node {
-              fields {
-                slug
-              }
+  return graphql(`
+    query {
+      allMarkdownRemark(sort: { fields: frontmatter___date, order: DESC }) {
+        edges {
+          node {
+            id
+            frontmatter {
+              background
+              category
+              date(locale: "en-us", fromNow: false, formatString: "DD MMMM YYYY")
+              description
+              title
+              color
+            }
+            timeToRead
+            fields {
+              slug
             }
           }
         }
       }
-    `,
-    { limit: 1000 }
+    }`
   ).then((result) => {
-    if (result.errors) {
-      throw result.errors;
-    }
+    if (result.errors) { throw result.errors; }
+    const posts = result.data.allMarkdownRemark.edges;
 
     // Create blog post pages.
-    result.data.allMarkdownRemark.edges.forEach((edge) => {
+    posts.forEach(({ node }) => {
+      const path = `${node.fields.slug}`;
       createPage({
         // Path for this page — required
-        path: `${edge.node.fields.slug}`,
+        path: path,
         component: blogPostTemplate,
         context: {
-          slug: edge.node.fields.slug,
+          slug: node.fields.slug,
         },
       });
+      console.info(`Generating post "${path}"`);
+    });
+
+    const postsPerPage = 2;
+    const numPages = Math.ceil(posts.length / postsPerPage);
+
+    Array.from({ length: numPages }).forEach((_, index) => {
+      const path = index === 0 ? '/' : `/page/${index + 1}/`;
+      createPage({
+        path: path,
+        component: indexTemplate,
+        context: {
+          limit: postsPerPage,
+          skip: index * postsPerPage,
+          numPages: numPages,
+          currentPage: index + 1
+        }
+      });
+
+      console.info(`Generating list "${path}"`);
     });
   });
 };
