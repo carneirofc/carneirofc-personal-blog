@@ -2,8 +2,9 @@ import React from "react";
 import { graphql } from "gatsby";
 
 import Layout from "../components/Layout";
-import SEO from "../components/seo";
+import SEO from "../components/SEO";
 import PostItem from "../components/PostItem";
+import Pagination from "../components/Pagination";
 
 export const query = graphql`
   query PostsOnPage($limit: Int!, $skip: Int!) {
@@ -31,6 +32,12 @@ export const query = graphql`
 
 const BlogList = (props) => {
   const postList = props.data.allMarkdownRemark.edges;
+  const { numPages, currentPage } = props.pageContext;
+  const isFirst = currentPage === 1;
+  const isLast = currentPage === numPages;
+  const prevPage = currentPage - 1 === 1 ? "/" : `/page/${currentPage - 1}`;
+  const nextPage = `/page/${currentPage + 1}`;
+
   return (
     <Layout>
       <SEO title="Home" />
@@ -58,6 +65,14 @@ const BlogList = (props) => {
           );
         }
       )}
+      <Pagination
+        isFirst={isFirst}
+        isLast={isLast}
+        currentPage={currentPage}
+        totalPages={numPages}
+        prevPage={prevPage}
+        nextPage={nextPage}
+      />
     </Layout>
   );
 };

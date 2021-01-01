@@ -1,5 +1,8 @@
 import React from "react";
-import { graphql, useStaticQuery } from "gatsby";
+import { graphql } from "gatsby";
+
+import SEO from "../components/SEO";
+import Layout from "../components/Layout";
 
 export const query = graphql`
   query DataFromSlug($slug: String!) {
