@@ -7,14 +7,11 @@ const Avatar = () => {
     query {
       avatarImage: file(relativePath: { eq: "profile.jpg" }) {
         childImageSharp {
-          fixed(height: 120, quality: 100) {
-            ...GatsbyImageSharpFixed_tracedSVG
-          }
+          gatsbyImageData(layout: FIXED, height: 120)
         }
       }
     }
   `);
-
-  return <S.AvatarWrapper fixed={avatarImage.childImageSharp.fixed} />;
+  return <S.AvatarWrapper image={avatarImage.childImageSharp.gatsbyImageData} />;
 };
 export default Avatar;

@@ -30,8 +30,8 @@ const Profile = () => {
         <Avatar />
         <S.ProfileAuthor>{author}</S.ProfileAuthor>
         <S.ProfileProfession>{profession}</S.ProfileProfession>
+        <S.ProfileDescription>{description}</S.ProfileDescription>
       </S.ProfileLink>
-      <S.ProfileDescription>{description}</S.ProfileDescription>
     </S.ProfileWrapper>
   );
 };
