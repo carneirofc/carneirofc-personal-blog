@@ -142,9 +142,6 @@ export const PostMainContent = styled.section`
       z-index: 3;
     }
   }
-  .gatsby-highlight {
-    padding: 0 1.6rem 1.6rem;
-  }
   .instagram-media {
     margin: 1rem auto !important;
   }

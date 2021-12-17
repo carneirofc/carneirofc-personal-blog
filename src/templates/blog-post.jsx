@@ -5,9 +5,6 @@ import SEO from "../components/SEO";
 import Layout from "../components/Layout";
 import * as S from "../components/Post/styled";
 
-import hljs from "highlight.js";
-import "highlight.js/styles/dracula.css";
-
 export const query = graphql`
   query GetPost($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
@@ -32,24 +29,6 @@ class BlogPost extends React.Component {
     this.mainRef = React.createRef();
     this.state = { hl: false };
   }
-
-  componentDidMount() {
-    this.highlight();
-  }
-
-  componentDidUpdate() {
-    this.highlight();
-  }
-
-  highlight = () => {
-    if (this.mainRef) {
-      const nodes = this.mainRef.current.querySelectorAll("pre");
-      nodes.forEach((node) => {
-        console.log("highlight", node);
-        hljs.highlightBlock(node);
-      });
-    }
-  };
 
   render() {
     const {
