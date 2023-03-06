@@ -1,7 +1,7 @@
-module.exports = {
+export default {
   site: {
     title: "Canto do Cláudio",
-    description: `Javascript, Python, C, Modern C++, Linux administration, Docker and some other things...`,
+    description: `Typescript, Javascript, C#, Python, C, Modern C++, Linux administration, Docker, Kubernetes, Devops and some other things...`,
     icon: "src/images/profile.jpg",
   },
 
