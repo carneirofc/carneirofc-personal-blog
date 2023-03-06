@@ -1,6 +1,6 @@
-----
-background: #1E1F29
-color: #61AFEF
+---
+background: "#1E1F29"
+color: "#61AFEF"
 category: Containers
 date: 2021-12-17 14:00:00
 description: Setup Podman as replacement of Docker on Windows 10 using WSL2
