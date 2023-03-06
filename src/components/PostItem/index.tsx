@@ -1,10 +1,28 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import * as S from "./styled";
 
-const PostItem = (props) => {
-  const { slug, category, background, color, title, date, timeToRead, description } = props;
+type PostItemProps = {
+  slug: string;
+  category: string;
+  title: string;
+  date: string;
+  timeToRead: string;
+  description: string;
+  background: string;
+  color: string;
+};
+export const PostItem = (props: PostItemProps) => {
+  const {
+    slug,
+    category,
+    background,
+    color,
+    title,
+    date,
+    timeToRead,
+    description,
+  } = props;
   return (
     <S.PostItemWrapper>
       <S.PostItemLink to={slug}>
@@ -19,14 +37,6 @@ const PostItem = (props) => {
       </S.PostItemLink>
     </S.PostItemWrapper>
   );
-};
-PostItem.propTypes = {
-  slug: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  timeToRead: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
 };
 
 export default PostItem;

@@ -3,7 +3,7 @@ import { links } from "./content";
 
 import * as S from "./styled";
 
-const MenuLinks = () => {
+export const MenuLinks = () => {
   return (
     <S.MenuLinksWarpper>
       <S.MenuLinksList>

@@ -3,12 +3,23 @@ import propTypes from "prop-types";
 import { Link } from "gatsby";
 import * as S from "./styled";
 
-const Pagination = ({ isFirst, isLast, currentPage, totalPages, prevPage = "#", nextPage = "#" }) => {
-  /*
-  <-
-  page n / total
-  ->
-  */
+type PaginationProps = {
+  isFirst: boolean;
+  isLast: boolean;
+  currentPage: number;
+  totalPages: number;
+  prevPage: string;
+  nextPage: string;
+};
+
+export const Pagination = ({
+  isFirst,
+  isLast,
+  currentPage,
+  totalPages,
+  prevPage = "#",
+  nextPage = "#",
+}: PaginationProps) => {
   return (
     <S.PaginationWrapper>
       {!isFirst ? (
@@ -28,13 +39,5 @@ const Pagination = ({ isFirst, isLast, currentPage, totalPages, prevPage = "#", 
       )}
     </S.PaginationWrapper>
   );
-};
-Pagination.propTypes = {
-  isFirst: propTypes.bool.isRequired,
-  isLast: propTypes.bool.isRequired,
-  currentPage: propTypes.number.isRequired,
-  totalPages: propTypes.number.isRequired,
-  prevPage: propTypes.string,
-  nextPage: propTypes.string,
 };
 export default Pagination;

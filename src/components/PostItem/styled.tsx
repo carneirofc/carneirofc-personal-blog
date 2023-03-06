@@ -18,7 +18,10 @@ export const PostItemWrapper = styled.section`
   padding: 2rem 3rem;
 `;
 
-export const PostItemTag = styled.div`
+type PostItemTagProps = {
+  background?: string;
+};
+export const PostItemTag = styled.div<PostItemTagProps>`
   align-items: center;
   background: ${(props) => (props.background ? props.background : "#1fa1f2")};
   border-radius: 50%;

@@ -4,7 +4,7 @@ import SocialLinks from "../SocialLinks";
 import MenuLinks from "../MenuLinks";
 import * as S from "./styled";
 
-const Sidebar = () => {
+export const Sidebar = () => {
   return (
     <S.SidebarWrapper>
       <Profile />
@@ -13,5 +13,4 @@ const Sidebar = () => {
     </S.SidebarWrapper>
   );
 };
-
 export default Sidebar;

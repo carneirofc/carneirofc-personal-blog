@@ -1,11 +1,12 @@
 import React from "react";
-import Layout from "../components/Layout";
-import SEO from "../components/SEO";
+import { GlobalHead, Layout } from "../components";
 
+export const Head = () => {
+  return <GlobalHead title="About" description={""} />;
+};
 const AboutPage = () => {
   return (
     <Layout>
-      <SEO title="About" />
       <h1>About Page</h1>
     </Layout>
   );

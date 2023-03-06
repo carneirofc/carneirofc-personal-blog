@@ -42,7 +42,7 @@ const BottomBar = () => {
   );
 };
 
-const MenuBar = () => {
+export const MenuBar = () => {
   return (
     <S.MenuBarWrapper>
       <UpperBar />
@@ -50,5 +50,3 @@ const MenuBar = () => {
     </S.MenuBarWrapper>
   );
 };
-
-export default MenuBar;

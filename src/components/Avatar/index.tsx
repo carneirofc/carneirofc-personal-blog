@@ -3,8 +3,8 @@ import { useStaticQuery, graphql } from "gatsby";
 import * as S from "./styled";
 
 const Avatar = () => {
-  const { avatarImage } = useStaticQuery(graphql`
-    query {
+  const { avatarImage } = useStaticQuery<Queries.AvatarQuery>(graphql`
+    query Avatar {
       avatarImage: file(relativePath: { eq: "profile.jpg" }) {
         childImageSharp {
           gatsbyImageData(layout: FIXED, height: 120)
@@ -12,6 +12,11 @@ const Avatar = () => {
       }
     }
   `);
-  return <S.AvatarWrapper image={avatarImage.childImageSharp.gatsbyImageData} />;
+  return (
+    <S.AvatarWrapper
+      alt="Avatar image"
+      image={avatarImage?.childImageSharp?.gatsbyImageData!}
+    />
+  );
 };
 export default Avatar;
