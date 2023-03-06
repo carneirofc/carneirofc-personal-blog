@@ -35,14 +35,21 @@ export const query = graphql`
   }
 `;
 
+export type BlogListContext = {
+  numPages: number;
+  currentPage: number;
+  limit: number;
+  skip: number;
+};
+
 const BlogList = ({
   data: {
     allMarkdownRemark: { edges },
   },
   pageContext,
-}: PageProps<Queries.PostsOnPageQuery>) => {
+}: PageProps<Queries.PostsOnPageQuery, BlogListContext>) => {
   const postList = edges;
-  const { numPages, currentPage } = pageContext as any;
+  const { numPages, currentPage } = pageContext;
   const isFirst = currentPage === 1;
   const isLast = currentPage === numPages;
   const prevPage = currentPage - 1 === 1 ? "/" : `/page/${currentPage - 1}`;

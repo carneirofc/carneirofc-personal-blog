@@ -6,6 +6,8 @@
 import { GatsbyNode, PageProps } from "gatsby";
 import { createFilePath } from "gatsby-source-filesystem";
 import path from "path";
+import { BlogListContext } from "./src/templates/blog-list";
+import { BlogPostContext } from "./src/templates/blog-post";
 
 // Templates
 const blogPostTemplate = path.resolve("src/templates/blog-post.tsx");
@@ -66,39 +68,47 @@ export const createPages: GatsbyNode["createPages"] = async ({
         }
       }
     `);
+
   if (result.errors) {
     throw result.errors;
   }
 
-  const posts = result?.data?.allMarkdownRemark.edges?.forEach(({ node }) => {
-    // Create blog post pages.
-    const path = `${node?.fields?.slug}`;
-    createPage({
-      // Path for this page — required
-      path: path,
-      component: blogPostTemplate,
-      context: {
-        slug: node?.fields?.slug,
-      },
-    });
-    console.info(`Generating post "${path}"`);
-  });
+  function createPosts() {
+    const posts = result?.data?.allMarkdownRemark.edges;
+    if (!posts) return;
 
-  const postsPerPage = 2;
-  const numPages = Math.ceil(posts.length / postsPerPage);
-  Array.from({ length: numPages }).forEach((_, index) => {
-    const path_1 = index === 0 ? "/" : `/page/${index + 1}/`;
-    createPage({
-      path: path_1,
-      component: indexTemplate,
-      context: {
-        limit: postsPerPage,
-        skip: index * postsPerPage,
-        numPages: numPages,
-        currentPage: index + 1,
-      },
+    posts.forEach(({ node }) => {
+      // Create blog post pages.
+      const path = `${node?.fields?.slug}`;
+      createPage<BlogPostContext>({
+        // Path for this page — required
+        path: path,
+        component: blogPostTemplate,
+        context: {
+          slug: node?.fields?.slug ?? "",
+        },
+      });
+      console.info(`Generating post "${path}"`);
     });
 
-    console.info(`Generating list "${path_1}"`);
-  });
+    const POSTS_PER_PAGE = 2;
+    const numPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+    Array.from({ length: numPages }).forEach((_, index) => {
+      const path_1 = index === 0 ? "/" : `/page/${index + 1}/`;
+      createPage<BlogListContext>({
+        path: path_1,
+        component: indexTemplate,
+        context: {
+          limit: POSTS_PER_PAGE,
+          skip: index * POSTS_PER_PAGE,
+          numPages: numPages,
+          currentPage: index + 1,
+        },
+      });
+
+      console.info(`Generating list "${path_1}"`);
+    });
+  }
+
+  createPosts();
 };

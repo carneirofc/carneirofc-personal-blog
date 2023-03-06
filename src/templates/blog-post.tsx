@@ -21,7 +21,6 @@ export const query = graphql`
     }
   }
 `;
-
 export const Head = (props: PageProps<Queries.BlogPostQuery>) => {
   const frontmatter = props.data.markdownRemark?.frontmatter;
   return (
@@ -32,9 +31,9 @@ export const Head = (props: PageProps<Queries.BlogPostQuery>) => {
   );
 };
 
-const BlogPost = (props: PageProps<Queries.BlogPostQuery>) => {
+export type BlogPostContext = { slug: string };
+const BlogPost = (props: PageProps<Queries.BlogPostQuery, BlogPostContext>) => {
   const mainRef = React.useRef(null);
-  const state = React.useState({ h1: false });
 
   const {
     data: { markdownRemark },
