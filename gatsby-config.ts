@@ -1,4 +1,5 @@
-const config = require("./content/meta/config");
+import type { GatsbyConfig } from "gatsby";
+import config from "./content/meta/config";
 
 const sourceFilesystem = [
   {
@@ -24,7 +25,7 @@ const sourceFilesystem = [
   },
 ];
 
-module.exports = {
+const gatsbyConfig: GatsbyConfig = {
   siteMetadata: {
     title: config.site.title,
     description: config.site.description,
@@ -33,11 +34,14 @@ module.exports = {
     aboutAuthor: config.author.about,
     profession: config.author.profession,
   },
+  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
+  // If you use VSCode you can also use the GraphQL plugin
+  // Learn more at: https://gatsby.dev/graphql-typegen
+  graphqlTypegen: true,
   plugins: [
     ...sourceFilesystem,
     "gatsby-plugin-styled-components",
     "gatsby-plugin-image",
-    "gatsby-plugin-react-helmet",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {
@@ -85,5 +89,8 @@ module.exports = {
         icon: config.site.icon, // This path is relative to the root of the site.
       },
     },
+    `gatsby-plugin-offline`,
   ],
 };
+
+export default gatsbyConfig;
