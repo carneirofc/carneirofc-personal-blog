@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "gatsby";
 
 export const ProfileWrapper = styled.section`
-  color: #8899a6;
+  color: var(--text-dark);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,12 +13,12 @@ export const ProfileLink = styled(Link)`
   flex-direction: column;
   align-items: center;
 
-  color: #8899a6;
+  color: var(--text-dark);
   text-decoration: none;
   transition: color 0.5s;
 
   &:hover {
-    color: #1fa1f2;
+    color: var(--active);
   }
 `;
 
@@ -26,7 +26,7 @@ export const ProfileAuthor = styled.h1`
   font-size: 1.6rem;
   margin: 0.5rem auto 1.5rem auto;
   &:hover {
-    color: #1fa1f2;
+    color: var(--active);
   }
 `;
 

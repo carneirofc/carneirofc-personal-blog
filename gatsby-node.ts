@@ -6,6 +6,7 @@
 import { GatsbyNode, PageProps } from "gatsby";
 import { createFilePath } from "gatsby-source-filesystem";
 import path from "path";
+import { BlogPostRef } from "./src/interfaces/interfaces";
 import { BlogListContext } from "./src/templates/blog-list";
 import { BlogPostContext } from "./src/templates/blog-post";
 
@@ -64,6 +65,24 @@ export const createPages: GatsbyNode["createPages"] = async ({
                 slug
               }
             }
+            next {
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                description
+              }
+            }
+            previous {
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                description
+              }
+            }
           }
         }
       }
@@ -76,8 +95,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
   function createPosts() {
     const posts = result?.data?.allMarkdownRemark.edges;
     if (!posts) return;
-
-    posts.forEach(({ node }) => {
+    posts.forEach(({ node, next, previous }) => {
       // Create blog post pages.
       const path = `${node?.fields?.slug}`;
       createPage<BlogPostContext>({
@@ -86,6 +104,22 @@ export const createPages: GatsbyNode["createPages"] = async ({
         component: blogPostTemplate,
         context: {
           slug: node?.fields?.slug ?? "",
+          previous:
+            previous != null && previous.fields?.slug
+              ? {
+                  description: previous.frontmatter?.description ?? "",
+                  slug: previous.fields?.slug,
+                  title: previous.frontmatter?.title ?? "",
+                }
+              : undefined,
+          next:
+            next != null && next.fields?.slug
+              ? {
+                  description: next.frontmatter?.description ?? "",
+                  slug: next.fields?.slug,
+                  title: next.frontmatter?.title ?? "",
+                }
+              : undefined,
         },
       });
       console.info(`Generating post "${path}"`);

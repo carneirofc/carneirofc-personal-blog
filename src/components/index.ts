@@ -7,3 +7,4 @@ export * from "./PostItem";
 export * from "./SEO";
 export * from "./Sidebar";
 export * from "./SocialLinks";
+export * from "./RecommendedPosts";

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { graphql, PageProps } from "gatsby";
 
-import { GlobalHead, Layout, SEO, SEOProps } from "../components";
+import { GlobalHead, Layout, RecommendedPosts } from "../components";
 import * as S from "../components/Post/styled";
+import { BlogPostRef } from "../interfaces/interfaces";
 
 export const query = graphql`
   query BlogPost($slug: String!) {
@@ -31,9 +32,15 @@ export const Head = (props: PageProps<Queries.BlogPostQuery>) => {
   );
 };
 
-export type BlogPostContext = { slug: string };
+export type BlogPostContext = {
+  slug: string;
+  next: BlogPostRef;
+  previous: BlogPostRef;
+};
 const BlogPost = (props: PageProps<Queries.BlogPostQuery, BlogPostContext>) => {
   const mainRef = React.useRef(null);
+  const { next, previous } = props.pageContext;
+  console.log(props);
 
   const {
     data: { markdownRemark },
@@ -56,6 +63,7 @@ const BlogPost = (props: PageProps<Queries.BlogPostQuery, BlogPostContext>) => {
       <S.PostMainContent>
         <div ref={mainRef} dangerouslySetInnerHTML={{ __html: html! }}></div>
       </S.PostMainContent>
+      <RecommendedPosts next={next} previous={previous} />
     </Layout>
   );
 };

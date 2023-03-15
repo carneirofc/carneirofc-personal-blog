@@ -1,11 +1,24 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
+
+body {
+	// CSS Variables
+	--background-dark: #192734;
+	--background-light: #435669;
+	--background-active: #183755;
+	--border-dark: #38444d;
+	--border-light: #306586;
+	--active: #1fa2f2;
+	--link: #6ac6ff;
+	--text: #fcfcfc;
+	--text-dark: #8899a6;
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -33,7 +46,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-	background: #a5c6e6;
+	background: var(--background-light);
 	font-size: 100%;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
 		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -54,6 +67,7 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 `;
 
 export default GlobalStyles;

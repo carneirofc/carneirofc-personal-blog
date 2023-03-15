@@ -12,7 +12,7 @@ export const ArrowLeft = styled(LeftArrowAlt)`
 
 export const PaginationWrapper = styled.section`
   align-items: center;
-  border-top: 1px solid #38444d;
+  border-top: 1px solid var(--border-dark);
   display: flex;
   padding: 1.5rem 3rem;
   justify-content: space-between;
@@ -23,11 +23,11 @@ export const PaginationWrapper = styled.section`
   }
 
   a {
-    color: #8899a6;
+    color: var(--text-dark);
     text-decoration: none;
     transition: color 0.5s;
     &:hover {
-      color: #1fa1f2;
+      color: var(--active);
     }
   }
 `;

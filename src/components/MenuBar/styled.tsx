@@ -3,17 +3,18 @@ import { Link } from "gatsby";
 
 export const MenuBarWrapper = styled.aside`
   align-items: center;
-  background: #192734;
-  border-left: 1px solid #38444d;
+  background: var(--background-dark);
+  // border-left: 1px solid var(--border);
   box-sizing: border-box; // make padding and border be counted inside width:
   display: flex;
   flex-direction: column;
   height: 100vh;
   justify-content: space-between;
-  //padding: 0.8rem 0;
   position: fixed;
   right: 0;
-  width: 3.75rem;
+  width: 2.5rem;
+  border-left: 0;
+  padding-left: 0;
 `;
 
 export const MenuBarGroup = styled.div`
@@ -27,7 +28,7 @@ export const MenuBarLink = styled(Link)`
 `;
 
 export const MenuBarItem = styled.span`
-  color: #8899a6;
+  color: var(--text-dark);
   cursor: pointer;
   display: block;
   height: 2rem;
@@ -36,6 +37,6 @@ export const MenuBarItem = styled.span`
   width: 2.25rem;
 
   &:hover {
-    color: #1fa1f2;
+    color: var(--active);
   }
 `;
