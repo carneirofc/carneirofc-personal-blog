@@ -5,8 +5,7 @@ export const LayoutWrapper = styled.section`
 `;
 
 export const LayoutMain = styled.main`
-  min-height: 100vh;
   padding: 0 4rem 0 20rem;
-  width: 100%;
   overflow: hidden;
+  width: 100%;
 `;

@@ -11,10 +11,10 @@ export const MenuLinksList = styled.ul`
 `;
 
 export const MenuLinksItem = styled.li`
-  padding: 0.5rem 0;
+  padding: 0.2rem 0;
 
   .active {
-    color: var(--active);
+    background-color: var(--color-background-500);
   }
 `;
 
@@ -27,7 +27,9 @@ export const MenuLinkLink = styled(Link)`
   border-radius: 4px;
 
   display: block;
-  padding: 0.2rem 0;
+  padding: 0.5rem 0;
+  font-size: var(--fs-500);
+  font-weight: var(--fw-bold);
 
   &:hover {
     color: var(--active);

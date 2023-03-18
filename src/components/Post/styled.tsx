@@ -1,6 +1,17 @@
 import styled from "styled-components";
 
+export const PostHeaderBackground = styled.div`
+  position: absolute;
+  z-index: -100;
+  background-color: var(--color-primary-900);
+  clip-path: polygon(0 0, 100% 0%, 100% 64%, 0 100%);
+  height: max(35vh, 300px);
+  left: 0;
+  right: 0;
+`;
+
 export const PostHeader = styled.header`
+  position: relative;
   color: var(--text);
   margin: auto;
   max-width: 70rem;
@@ -89,7 +100,7 @@ export const PostMainContent = styled.section`
     color: var(--text);
     border-left: 0.3rem solid var(--border-light);
     padding: 0 1.875rem;
-    margin: 3.125rem auto
+    margin: 3.125rem auto;
   }
   hr {
     border: 1px solid var(--border-dark);
@@ -125,7 +136,7 @@ export const PostMainContent = styled.section`
     font-size: 1.2rem;
   }
   strong {
-    font-weight: 700;
+    font-weight: var(--fw-700);
   }
   .gatsby-resp-image-background-image {
     z-index: 2;
@@ -146,8 +157,8 @@ export const PostMainContent = styled.section`
     margin: 1rem auto !important;
   }
   a {
-    border-bottom: 1px dashed var(--link);
-    color: var(--link);
+    border-bottom: 1px dashed var(--color-secondary-500);
+    color: var(--color-primary-500);
     text-decoration: none;
     transition: opacity 0.5s;
     svg {
@@ -155,6 +166,9 @@ export const PostMainContent = styled.section`
     }
     &:hover {
       opacity: 0.8;
+    }
+    &:visited {
+      color: var(--color-secondary-500);
     }
   }
 `;

@@ -1,7 +1,13 @@
 import React from "react";
 import { graphql, PageProps } from "gatsby";
 
-import { Layout, PostItem, Pagination, GlobalHead } from "../components";
+import {
+  Layout,
+  PostItem,
+  Pagination,
+  GlobalHead,
+  PostItemContainer,
+} from "../components";
 
 export const Head = () => {
   return <GlobalHead title="About" description={""} />;
@@ -57,21 +63,23 @@ const BlogList = ({
   postList[0].node.frontmatter?.background;
   return (
     <Layout>
-      {postList.map(({ node: { id, timeToRead, frontmatter, fields } }) => {
-        return (
-          <PostItem
-            background={frontmatter?.background ?? ""}
-            category={frontmatter?.category ?? ""}
-            color={frontmatter?.color ?? ""}
-            date={frontmatter?.date ?? ""}
-            description={frontmatter?.description ?? ""}
-            key={id}
-            slug={fields?.slug ?? ""}
-            timeToRead={`${timeToRead} min`}
-            title={frontmatter?.title ?? ""}
-          />
-        );
-      })}
+      <PostItemContainer>
+        {postList.map(({ node: { id, timeToRead, frontmatter, fields } }) => {
+          return (
+            <PostItem
+              background={frontmatter?.background ?? ""}
+              category={frontmatter?.category ?? ""}
+              color={frontmatter?.color ?? ""}
+              date={frontmatter?.date ?? ""}
+              description={frontmatter?.description ?? ""}
+              key={id}
+              slug={fields?.slug ?? ""}
+              timeToRead={`${timeToRead} min`}
+              title={frontmatter?.title ?? ""}
+            />
+          );
+        })}
+      </PostItemContainer>
       <Pagination
         isFirst={isFirst}
         isLast={isLast}

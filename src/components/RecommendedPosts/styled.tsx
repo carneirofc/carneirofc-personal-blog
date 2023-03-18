@@ -23,10 +23,10 @@ export const IconWarpper = styled.div`
 
 export const PostItemLink = styled(Link)`
   background-color: var(--background-dark);
-  color: var(--text-dark);
+  color: var(--color-primary-500);
   text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: var(--fs-400);
+  font-weight: var(--fw-regular);
   border-radius: 4px;
 
   display: flex;
@@ -35,9 +35,10 @@ export const PostItemLink = styled(Link)`
   align-items: center;
   gap: min(10px, 1rem);
   flex-wrap: nowrap;
+  padding: 0.2rem 0.6rem;
 
   &:hover {
-    color: var(--active);
+    color: var(--color-primary-900);
     background-color: var(--background-active);
   }
 `;

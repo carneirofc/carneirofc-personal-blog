@@ -4,23 +4,21 @@ import { Link } from "gatsby";
 export const MenuBarWrapper = styled.aside`
   align-items: center;
   background: var(--background-dark);
-  // border-left: 1px solid var(--border);
   box-sizing: border-box; // make padding and border be counted inside width:
   display: flex;
   flex-direction: column;
-  height: 100vh;
   justify-content: space-between;
   position: fixed;
-  right: 0;
   width: 2.5rem;
-  border-left: 0;
-  padding-left: 0;
+
+  right: 0;
+  top: 0;
+  bottom: 0;
 `;
 
 export const MenuBarGroup = styled.div`
   display: flex;
   flex-direction: column;
-  color: tomato;
 `;
 
 export const MenuBarLink = styled(Link)`
@@ -34,7 +32,7 @@ export const MenuBarItem = styled.span`
   height: 2rem;
   padding: 0.6rem;
   position: relative;
-  width: 2.25rem;
+  width: 1.8rem;
 
   &:hover {
     color: var(--active);

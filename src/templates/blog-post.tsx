@@ -34,8 +34,8 @@ export const Head = (props: PageProps<Queries.BlogPostQuery>) => {
 
 export type BlogPostContext = {
   slug: string;
-  next: BlogPostRef;
-  previous: BlogPostRef;
+  next?: BlogPostRef;
+  previous?: BlogPostRef;
 };
 const BlogPost = (props: PageProps<Queries.BlogPostQuery, BlogPostContext>) => {
   const mainRef = React.useRef(null);
@@ -53,6 +53,7 @@ const BlogPost = (props: PageProps<Queries.BlogPostQuery, BlogPostContext>) => {
 
   return (
     <Layout>
+      <S.PostHeaderBackground />
       <S.PostHeader>
         <S.PostDate>
           {date} - Time to read {timeToRead} min

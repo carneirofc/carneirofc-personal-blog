@@ -7,9 +7,12 @@ export const SidebarWrapper = styled.aside`
   box-sizing: border-box; // make padding and border be counted inside width:
   display: flex;
   flex-direction: column;
-  height: 100vh;
   padding: 2rem;
   position: fixed;
   text-align: center;
   width: 20rem;
+
+  left: 0;
+  bottom: 0;
+  top: 0;
 `;

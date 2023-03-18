@@ -4,9 +4,7 @@ import * as S from "./styled";
 import { Home } from "@styled-icons/boxicons-solid/Home";
 import { SearchAlt as Search } from "@styled-icons/boxicons-regular/SearchAlt";
 import { Bulb as BulbLine } from "@styled-icons/boxicons-regular/Bulb";
-//import { Bulb as BulbSolid } from "@styled-icons/boxicons-solid/Bulb";
 import { GridAlt as Grid } from "@styled-icons/boxicons-regular/GridAlt";
-//import { ListUl as List } from "@styled-icons/boxicons-regular/ListUl";
 import { ArrowToTop } from "@styled-icons/boxicons-regular/ArrowToTop";
 
 const UpperBar = () => {
