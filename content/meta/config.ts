@@ -9,6 +9,6 @@ export default {
   author: {
     name: "Cláudio Ferreira Carneiro",
     about: "Apaixonado por tecnologia e desenvolvimento",
-    profession: "Engenheiro de Controle e Automação",
+    profession: "Engenheiro de Software & Controle e Automação",
   },
 };
