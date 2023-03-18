@@ -125,7 +125,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
       console.info(`Generating post "${path}"`);
     });
 
-    const POSTS_PER_PAGE = 2;
+    const POSTS_PER_PAGE = 15;
     const numPages = Math.ceil(posts.length / POSTS_PER_PAGE);
     Array.from({ length: numPages }).forEach((_, index) => {
       const path_1 = index === 0 ? "/" : `/page/${index + 1}/`;
