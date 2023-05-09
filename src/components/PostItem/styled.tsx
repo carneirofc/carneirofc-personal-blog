@@ -10,6 +10,8 @@ export const PostItemContainer = styled.div`
 
 export const PostItemDescription = styled.p``;
 
+export const PostItemLanguage = styled.span``;
+
 export const PostItemWrapper = styled(Link)`
   text-decoration: none;
 
@@ -22,7 +24,7 @@ export const PostItemWrapper = styled(Link)`
   padding: 1rem 0.8rem;
   margin: 1rem 1rem;
   width: 300px;
-  height: 200px;
+  height: 230px;
   min-width: 300px;
   background-color: var(--color-background-400);
 
@@ -42,6 +44,16 @@ export const PostItemWrapper = styled(Link)`
       -webkit-line-clamp: 10;
       max-height: calc(var(--description-line-height) * 10);
     }
+
+    ${PostItemLanguage} {
+      font-weight: var(--fw-bold);
+      color: var(--color-secondary-500);
+    }
+  }
+
+  ${PostItemLanguage} {
+    color: var(--color-primary-900);
+    font-weight: var(--fw-bold);
   }
 
   ${PostItemDescription} {
@@ -97,11 +109,13 @@ export const PostItemInfo = styled.div`
   flex-direction: column;
   margin-left: 1.5rem;
 `;
+
 export const PostItemTitle = styled.h1`
   font-size: var(--fs-600);
   font-weight: var(--fw-bold);
   margin: 0.2rem 0 0.5rem;
 `;
+
 export const PostItemDate = styled.time`
   font-size: var(--fs-300);
 `;

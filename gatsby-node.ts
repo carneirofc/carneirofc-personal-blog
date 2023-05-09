@@ -3,7 +3,7 @@
  *
  * See: https://www.gatsbyjs.com/docs/node-apis/
  */
-import { GatsbyNode, PageProps } from "gatsby";
+import { GatsbyNode, PageProps, graphql } from "gatsby";
 import { createFilePath } from "gatsby-source-filesystem";
 import path from "path";
 import { BlogPostRef } from "./src/interfaces/interfaces";
@@ -14,7 +14,6 @@ import { BlogPostContext } from "./src/templates/blog-post";
 const blogPostTemplate = path.resolve("src/templates/blog-post.tsx");
 const indexTemplate = path.resolve("./src/templates/blog-list.tsx");
 
-const SLUG_START_INDEX = "xxxx-xx-xx-".length + 1;
 export const onCreateNode: GatsbyNode["onCreateNode"] = ({
   node,
   getNode,
@@ -22,17 +21,23 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = ({
 }) => {
   const { createNodeField } = actions;
   if (node.internal.type === "MarkdownRemark") {
-    const slugRelativeFilePath = createFilePath({
+    let slugRelativeFilePath = createFilePath({
       node,
       getNode,
       basePath: "pages",
     });
 
+    const language: string = (node as any)?.frontmatter?.language ?? "pt_BR";
+    const slugStartIndex = `xxxx-xx-xx-${language}-`.length + 1;
+
+    const slug = `/${language}/${slugRelativeFilePath.slice(slugStartIndex)}`;
     createNodeField({
       node,
       name: "slug",
-      value: `/${slugRelativeFilePath.slice(SLUG_START_INDEX)}`,
+      value: slug,
     });
+
+    console.info(`Criando node ${slug}`);
   }
 };
 
@@ -41,46 +46,18 @@ export const createPages: GatsbyNode["createPages"] = async ({
   actions,
 }) => {
   const { createPage } = actions;
-  const result: { errors?: any; data?: Queries.GetAllMarkdownNodesQuery } =
-    await graphql(`
-      query GetAllMarkdownNodes {
+
+  async function GetAllPostsLanguages() {
+    const res = await graphql<
+      Queries.GetAllPostsLanguagesQuery,
+      Queries.GetAllPostsLanguagesQueryVariables
+    >(`
+      query GetAllPostsLanguages {
         allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
           edges {
             node {
-              id
               frontmatter {
-                background
-                category
-                date(
-                  locale: "en-us"
-                  fromNow: false
-                  formatString: "DD MMMM YYYY"
-                )
-                description
-                title
-                color
-              }
-              timeToRead
-              fields {
-                slug
-              }
-            }
-            next {
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-                description
-              }
-            }
-            previous {
-              fields {
-                slug
-              }
-              frontmatter {
-                title
-                description
+                language
               }
             }
           }
@@ -88,61 +65,137 @@ export const createPages: GatsbyNode["createPages"] = async ({
       }
     `);
 
-  if (result.errors) {
-    throw result.errors;
+    if (res.errors) {
+      throw res.errors;
+    }
+    const languages = new Set<string>();
+    res?.data?.allMarkdownRemark.edges.forEach((e) => {
+      if (e.node?.frontmatter?.language)
+        languages.add(e.node?.frontmatter?.language);
+    });
+    if (languages.size == 0) {
+      throw "language set is empty, error when creating blog posts";
+    }
+    return Array.from(languages.values());
   }
 
-  function createPosts() {
-    const posts = result?.data?.allMarkdownRemark.edges;
-    if (!posts) return;
-    posts.forEach(({ node, next, previous }) => {
-      // Create blog post pages.
-      const path = `${node?.fields?.slug}`;
-      createPage<BlogPostContext>({
-        // Path for this page — required
-        path: path,
-        component: blogPostTemplate,
-        context: {
-          slug: node?.fields?.slug ?? "",
-          previous:
-            previous != null && previous.fields?.slug
-              ? {
-                  description: previous.frontmatter?.description ?? "",
-                  slug: previous.fields?.slug,
-                  title: previous.frontmatter?.title ?? "",
+  const languages = await GetAllPostsLanguages();
+  let createdPosts = 0;
+  for (const language of languages) {
+    console.info(`generating posts written in ${language}`);
+    const result: { errors?: any; data?: Queries.GetAllMarkdownNodesQuery } =
+      await graphql(`
+        query GetAllMarkdownNodes {
+          allMarkdownRemark(
+            sort: { frontmatter: { date: DESC } }
+            filter: { frontmatter: { language: { eq: "${language}" } } }
+          ) {
+            edges {
+              node {
+                id
+                frontmatter {
+                  background
+                  category
+                  date(
+                    locale: "en-us"
+                    fromNow: false
+                    formatString: "DD MMMM YYYY"
+                  )
+                  language
+                  description
+                  title
+                  color
                 }
-              : undefined,
-          next:
-            next != null && next.fields?.slug
-              ? {
-                  description: next.frontmatter?.description ?? "",
-                  slug: next.fields?.slug,
-                  title: next.frontmatter?.title ?? "",
+                timeToRead
+                fields {
+                  slug
                 }
-              : undefined,
-        },
-      });
-      console.info(`Generating post "${path}"`);
-    });
+              }
+              next {
+                fields {
+                  slug
+                }
+                frontmatter {
+                  title
+                  description
+                }
+              }
+              previous {
+                fields {
+                  slug
+                }
+                frontmatter {
+                  title
+                  description
+                }
+              }
+            }
+          }
+        }
+      `);
 
-    const POSTS_PER_PAGE = 15;
-    const numPages = Math.ceil(posts.length / POSTS_PER_PAGE);
-    Array.from({ length: numPages }).forEach((_, index) => {
-      const path_1 = index === 0 ? "/" : `/page/${index + 1}/`;
-      createPage<BlogListContext>({
-        path: path_1,
-        component: indexTemplate,
-        context: {
-          limit: POSTS_PER_PAGE,
-          skip: index * POSTS_PER_PAGE,
-          numPages: numPages,
-          currentPage: index + 1,
-        },
-      });
+    if (result.errors) {
+      throw result.errors;
+    }
 
-      console.info(`Generating list "${path_1}"`);
-    });
+    function createPosts() {
+      const posts = result?.data?.allMarkdownRemark.edges;
+      if (!posts) return;
+      posts.forEach(({ node, next, previous }) => {
+        createdPosts++;
+
+        // Create blog post pages.
+        const path = `${node?.fields?.slug}`;
+
+        createPage<BlogPostContext>({
+          // Path for this page — required
+          path: path,
+          component: blogPostTemplate,
+          context: {
+            slug: node?.fields?.slug ?? "",
+            language: language,
+            previous:
+              previous != null && previous.fields?.slug
+                ? {
+                    description: previous.frontmatter?.description ?? "",
+                    slug: previous.fields?.slug,
+                    title: previous.frontmatter?.title ?? "",
+                  }
+                : undefined,
+            next:
+              next != null && next.fields?.slug
+                ? {
+                    description: next.frontmatter?.description ?? "",
+                    slug: next.fields?.slug,
+                    title: next.frontmatter?.title ?? "",
+                  }
+                : undefined,
+          },
+        });
+        console.info(`Generating post "${path}"`);
+      });
+    }
+
+    createPosts();
   }
 
-  createPosts();
+  const POSTS_PER_PAGE = 15;
+  const numPages = Math.ceil(createdPosts / POSTS_PER_PAGE);
+  console.log(languages);
+  Array.from({ length: numPages }).forEach((_, index) => {
+    const path_1 = index === 0 ? "/" : `/page/${index + 1}/`;
+    createPage<BlogListContext>({
+      path: path_1,
+      component: indexTemplate,
+      context: {
+        languages: languages,
+        limit: POSTS_PER_PAGE,
+        skip: index * POSTS_PER_PAGE,
+        numPages: numPages,
+        currentPage: index + 1,
+      },
+    });
+
+    console.info(`Generating list "${path_1}"`);
+  });
 };

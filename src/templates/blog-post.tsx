@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { graphql, PageProps } from "gatsby";
 
-import { GlobalHead, Layout, RecommendedPosts } from "../components";
+import { Comments, GlobalHead, Layout, RecommendedPosts } from "../components";
 import * as S from "../components/Post/styled";
 import { BlogPostRef } from "../interfaces/interfaces";
 
@@ -12,12 +12,13 @@ export const query = graphql`
       id
       timeToRead
       frontmatter {
-        title
-        description
-        date(locale: "en-us", fromNow: false, formatString: "DD MMMM YYYY")
+        background
         category
         color
-        background
+        date(locale: "en-us", fromNow: false, formatString: "DD MMMM YYYY")
+        description
+        language
+        title
       }
     }
   }
@@ -34,12 +35,13 @@ export const Head = (props: PageProps<Queries.BlogPostQuery>) => {
 
 export type BlogPostContext = {
   slug: string;
+  language: string;
   next?: BlogPostRef;
   previous?: BlogPostRef;
 };
 const BlogPost = (props: PageProps<Queries.BlogPostQuery, BlogPostContext>) => {
   const mainRef = React.useRef(null);
-  const { next, previous } = props.pageContext;
+  const { next, previous, slug } = props.pageContext;
   console.log(props);
 
   const {
@@ -50,6 +52,7 @@ const BlogPost = (props: PageProps<Queries.BlogPostQuery, BlogPostContext>) => {
   const title = frontmatter?.title ?? "";
   const date = frontmatter?.date ?? "";
   const description = frontmatter?.description ?? "";
+  const language = frontmatter?.language ?? "pt_BR";
 
   return (
     <Layout>
@@ -65,6 +68,7 @@ const BlogPost = (props: PageProps<Queries.BlogPostQuery, BlogPostContext>) => {
         <div ref={mainRef} dangerouslySetInnerHTML={{ __html: html! }}></div>
       </S.PostMainContent>
       <RecommendedPosts next={next} previous={previous} />
+      <Comments config={{ identifier: title, language, title, slug }} />
     </Layout>
   );
 };

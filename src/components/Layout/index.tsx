@@ -14,12 +14,13 @@ import { MenuBar } from "../MenuBar";
 import * as S from "./styled";
 type LayoutProps = {
   children: React.ReactNode;
+  sidebarChildren?: React.ReactNode;
 };
-export const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children, sidebarChildren }: LayoutProps) => {
   return (
     <S.LayoutWrapper>
       <GlobalStyles />
-      <Sidebar />
+      <Sidebar>{sidebarChildren}</Sidebar>
       <S.LayoutMain>{children}</S.LayoutMain>
       <MenuBar />
     </S.LayoutWrapper>

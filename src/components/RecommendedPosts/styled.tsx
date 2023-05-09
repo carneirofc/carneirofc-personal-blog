@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
   height: min(50px, 4rem);
   padding-left: 1.2rem;
   padding-right: 1.2rem;
+  gap: 1rem;
 `;
 
 export const IconWarpper = styled.div`

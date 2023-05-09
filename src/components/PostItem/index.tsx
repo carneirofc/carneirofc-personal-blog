@@ -11,6 +11,7 @@ type PostItemProps = {
   description: string;
   background: string;
   color: string;
+  language: string;
 };
 export const PostItem = (props: PostItemProps) => {
   const {
@@ -22,19 +23,21 @@ export const PostItem = (props: PostItemProps) => {
     date,
     timeToRead,
     description,
+    language,
   } = props;
   return (
     <S.PostItemWrapper to={slug}>
-      { /* <S.PostItemLink to={slug}>
+      {/* <S.PostItemLink to={slug}>
        <S.PostItemTag color={color} background={background}>
           {category}
         </S.PostItemTag>
-  */ }
-        <S.PostItemInfo>
-          <S.PostItemTitle>{title}</S.PostItemTitle>
-          <S.PostItemDate>{`${date} - ${timeToRead}`}</S.PostItemDate>
-          <S.PostItemDescription>{description}</S.PostItemDescription>
-        </S.PostItemInfo>
+  */}
+      <S.PostItemInfo>
+        <S.PostItemTitle>{title}</S.PostItemTitle>
+        <S.PostItemDate>{`${date} - ${timeToRead}`}</S.PostItemDate>
+        <S.PostItemLanguage>{language}</S.PostItemLanguage>
+        <S.PostItemDescription>{description}</S.PostItemDescription>
+      </S.PostItemInfo>
       {/*</S.PostItemLink> */}
     </S.PostItemWrapper>
   );

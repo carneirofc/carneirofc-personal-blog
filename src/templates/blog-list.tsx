@@ -7,6 +7,7 @@ import {
   Pagination,
   GlobalHead,
   PostItemContainer,
+  LanguageFilter,
 } from "../components";
 
 export const Head = () => {
@@ -30,6 +31,7 @@ export const query = graphql`
             description
             title
             color
+            language
           }
           timeToRead
           fields {
@@ -46,6 +48,7 @@ export type BlogListContext = {
   currentPage: number;
   limit: number;
   skip: number;
+  languages: string[];
 };
 
 const BlogList = ({
@@ -55,30 +58,48 @@ const BlogList = ({
   pageContext,
 }: PageProps<Queries.PostsOnPageQuery, BlogListContext>) => {
   const postList = edges;
-  const { numPages, currentPage } = pageContext;
+  const { numPages, currentPage, languages } = pageContext;
   const isFirst = currentPage === 1;
   const isLast = currentPage === numPages;
-  const prevPage = currentPage - 1 === 1 ? "/" : `/page/${currentPage - 1}`;
+  const prevPage = currentPage - 1 === 1 ? "/" : `/page/${currentPage - 2}`;
   const nextPage = `/page/${currentPage + 1}`;
   postList[0].node.frontmatter?.background;
+
+  const navigatorLanguage = navigator.language?.replace("-", "_") ?? "en_US";
+  const [selectedLanguages, setSelectedLanguages] = React.useState<string[]>(
+    [...languages].sort()
+  );
   return (
-    <Layout>
+    <Layout
+      sidebarChildren={
+        <LanguageFilter
+          availableLanguages={languages}
+          selectedLanguages={selectedLanguages}
+          setSelectedLanguages={setSelectedLanguages}
+        />
+      }
+    >
       <PostItemContainer>
-        {postList.map(({ node: { id, timeToRead, frontmatter, fields } }) => {
-          return (
-            <PostItem
-              background={frontmatter?.background ?? ""}
-              category={frontmatter?.category ?? ""}
-              color={frontmatter?.color ?? ""}
-              date={frontmatter?.date ?? ""}
-              description={frontmatter?.description ?? ""}
-              key={id}
-              slug={fields?.slug ?? ""}
-              timeToRead={`${timeToRead} min`}
-              title={frontmatter?.title ?? ""}
-            />
-          );
-        })}
+        {postList
+          .filter((e) =>
+            selectedLanguages.includes(e.node.frontmatter?.language ?? "")
+          )
+          .map(({ node: { id, timeToRead, frontmatter, fields } }) => {
+            return (
+              <PostItem
+                language={frontmatter?.language ?? ""}
+                background={frontmatter?.background ?? ""}
+                category={frontmatter?.category ?? ""}
+                color={frontmatter?.color ?? ""}
+                date={frontmatter?.date ?? ""}
+                description={frontmatter?.description ?? ""}
+                key={id}
+                slug={fields?.slug ?? ""}
+                timeToRead={`${timeToRead} min`}
+                title={frontmatter?.title ?? ""}
+              />
+            );
+          })}
       </PostItemContainer>
       <Pagination
         isFirst={isFirst}

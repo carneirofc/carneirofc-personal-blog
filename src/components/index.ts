@@ -8,3 +8,5 @@ export * from "./SEO";
 export * from "./Sidebar";
 export * from "./SocialLinks";
 export * from "./RecommendedPosts";
+export * from "./Comments";
+export * from "./LanguageFilter";

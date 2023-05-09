@@ -5,6 +5,7 @@ category: Containers
 date: 2021-12-17 14:00:00
 description: Setup Podman as replacement of Docker on Windows 10 using WSL2
 title: Podman using WSL2
+language: en_US
 ---
 
 ## Install Podman
