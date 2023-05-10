@@ -68,7 +68,7 @@ const BlogPost = (props: PageProps<Queries.BlogPostQuery, BlogPostContext>) => {
         <div ref={mainRef} dangerouslySetInnerHTML={{ __html: html! }}></div>
       </S.PostMainContent>
       <RecommendedPosts next={next} previous={previous} />
-      <Comments config={{ identifier: title, language, title, slug }} />
+      <Comments config={{ language, title, slug }} />
     </Layout>
   );
 };

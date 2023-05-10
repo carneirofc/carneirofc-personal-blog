@@ -5,18 +5,24 @@ import { DiscussionEmbed } from "disqus-react";
 export type CommentsConfig = {
   slug: string;
   language: string;
-  identifier: string;
   title: string;
 };
 export type CommentsProps = {
   config: CommentsConfig;
 };
 export const Comments = ({ config }: CommentsProps) => {
-  const url = `${window.location.origin}/${config.slug}`;
+  const url = `https://carneirofc.github.io${config.slug}`;
   return (
     <S.CommentsWrapper>
-      <S.CommentsTitle>{config.title}</S.CommentsTitle>
-      <DiscussionEmbed shortname={config.title} config={{ url, ...config }} />
+      <DiscussionEmbed
+        shortname={`carneirofc`}
+        config={{
+          url,
+          identifier: url,
+          language: config.language,
+          title: config.title,
+        }}
+      />
     </S.CommentsWrapper>
   );
 };

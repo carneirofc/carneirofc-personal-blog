@@ -80,6 +80,7 @@ export const SEO = ({ description, lang, meta, title, children }: SEOProps) => {
       <title>{title ?? defaultTitle}</title>
       {_meta.map(({ content, name, property }) => (
         <meta
+          key={`${content}_${name}_${property}`}
           name={name ?? ""}
           content={content ?? ""}
           property={property ?? ""}
